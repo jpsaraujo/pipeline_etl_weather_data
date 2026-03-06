@@ -15,12 +15,14 @@ user = os.getenv('user')
 password = os.getenv('password')
 database = os.getenv('database')
 #host = 'host.docker.internal'
-host = 'localhost'
+# host = 'localhost' # Isso aponta para dentro do container, por isso falha
+host = 'host.docker.internal' # Agora isso apontará para o seu Debian
 
 def get_engine():
     logging.info(f"→ Conectando em {host}:5432/{database}")
     return create_engine(
         f"postgresql+psycopg2://{user}:{quote_plus(password)}@{host}:5432/{database}"
+
     )
     
 engine = get_engine()
